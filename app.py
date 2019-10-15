@@ -53,7 +53,7 @@ def index():
         print(prediction)
         return render_template("index.html",prediction=prediction)
     else:
-    	return render_template("index.html",prediction="No prediction,there's an error")
+    	return render_template("index.html")
 
 
 

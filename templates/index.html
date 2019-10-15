@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    
+
 
     <style type="text/css">
 
@@ -16,10 +16,10 @@
   </head>
   <body style="text-align: center;margin-top: 50px;">
   	{% if prediction %}
-      {% if  'Has' in  prediction %}
-        <p style="color: red;">{{ prediction }}</p>
-      {% else %}
+      {% if  'Not' in  prediction %}
         <p style="color: green;">{{ prediction }}</p>
+      {% else %}
+        <p style="color: red;">{{ prediction }}</p>
       {% endif %}
     {% endif %}
 

@@ -47,9 +47,9 @@ def index():
         print(result)
 
         if int(result)==1:
-            prediction='Has Diabetes'
+            prediction='You are Diabetic'
         else:
-            prediction='Not Diabetic'
+            prediction='You are Not Diabetic'
         print(prediction)
         return render_template("index.html",prediction=prediction)
     else:

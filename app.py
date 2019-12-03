@@ -1,73 +1,19 @@
-#print(model.predict([[1.8]]))
 
-"""
-from model import model 
-print(model) """
 
 import numpy as np
 from flask import Flask, request, jsonify,render_template
 import pickle
-#from flask_mysqldb import MySQL
+
+
 from flaskext.mysql import MySQL
 
 
-#creating instance of the class
 app=Flask(__name__)
-from selenium import webdriver
-
-from underscore import _
-
-from openpyxl import load_workbook, cell
-
-from selenium.webdriver.support.ui import WebDriverWait
-
-import openpyxl
-from selenium.webdriver.support import expected_conditions  as EC
-from selenium.webdriver.common.by import By
-import time
-import selenium.webdriver as webdriver
-import selenium.webdriver.support.ui as ui
-from selenium.webdriver.common.keys import Keys
-from time import sleep
-
-#driver = webdriver.Chrome() #"chromedriver.exe"
-
-
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-driver = webdriver.Chrome(ChromeDriverManager().install())
-"""
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-driver = webdriver.Chrome(ChromeDriverManager().install())
-"""
-
-
-#######################################################################
-########  THIS ONE CHANGES AS WELL FROM ON LINK TO OTHER    ###########
-#######################################################################
-driver.get("https://www.coursehero.com/subjects/political-science/questions")
-
-
-
-#######################################################################
-########        THESE ARE MY VARIABLES TO KEEP CONSTANT     ###########
-#######################################################################
-wait = WebDriverWait(driver, 3)
-linkindex = 0
-
-
-#######################################################################
-########  REMEMBER TO CLOSE THE EXCEL AFTER EVERY SCRIPT    ###########
-#######################################################################
-
-
-#this is dynamically changed
-previous = "Showing 1 to 8 of 3,821"
-j = 0  ### last question number
-row = 0 ##last  row in the excel sheet
-
 model = pickle.load(open('model.pkl','rb'))
+
+@app.route('/',methods = ['POST','GET'])
+def home():
+    return render_template("home.html")
 
 
 def ValuePredictor(to_predict_list):
@@ -76,18 +22,7 @@ def ValuePredictor(to_predict_list):
     result = loaded_model.predict(to_predict)
     return result[0]
 
-
-
-
-#to tell flask what url shoud trigger the function index()
-"""
-@app.route('/')
-def index():
-    return render_template('index.html',model=model)
-    """
-
-
-@app.route('/',methods = ['POST','GET'])
+@app.route('/predict',methods = ['POST','GET'])
 def index():
     if request.method == 'POST':
         to_predict_list = request.form.to_dict()
@@ -110,9 +45,48 @@ def index():
         print(prediction)
         return render_template("index.html",prediction=prediction)
     else:
-    	return render_template("index.html")
+        return render_template("index.html")
 
 
+
+if __name__ == '__main__':
+    app.run(port=5000, debug=True)
+
+"""
+from selenium import webdriver
+from underscore import _
+from openpyxl import load_workbook, cell
+from selenium.webdriver.support.ui import WebDriverWait
+import openpyxl
+from selenium.webdriver.support import expected_conditions  as EC
+from selenium.webdriver.common.by import By
+import time
+import selenium.webdriver as webdriver
+import selenium.webdriver.support.ui as ui
+from selenium.webdriver.common.keys import Keys
+from time import sleep
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+driver = webdriver.Chrome(ChromeDriverManager().install())
+driver.get("https://www.coursehero.com/subjects/political-science/questions")
+wait = WebDriverWait(driver, 3)
+linkindex = 0
+previous = "Showing 1 to 8 of 3,821"
+j = 0  
+row = 0 
+"""
+
+
+#to tell flask what url shoud trigger the function index()
+"""
+@app.route('/')
+def index():
+    return render_template('index.html',model=model)
+    """
+
+
+
+"""
 
 @app.route('/test',methods = ['POST','GET'])
 def index1():
@@ -389,9 +363,4 @@ def index1():
         if j == 3821:
             break
     return True
-    
-
-
-
-if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+"""
